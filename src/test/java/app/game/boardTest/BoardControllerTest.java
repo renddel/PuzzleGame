@@ -56,7 +56,7 @@ public class BoardControllerTest {
                 .thenReturn(new ResponseEntity<>(board.toString(), HttpStatus.OK));
 
         //When
-        var response = mockMvc.perform(get("/api/boards/{boardId}", id)
+        var response = mockMvc.perform(get("/api/game/v1/board/{boardId}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -67,6 +67,26 @@ public class BoardControllerTest {
         assertEquals(board.toString(), response);
         verify(boardController, times(1)).getBoardById(id);
     }
+
+    @Test
+    void shouldSearchForBoards_whenEndpointIsPrompted() throws Exception {
+        //Given
+        when(boardController.getAllBoards())
+                .thenReturn(board.toString());
+
+        //When
+        var response = mockMvc.perform(get("/api/game/v1/board/get-all")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        //Then
+        assertEquals(board.toString(), response);
+        verify(boardController, times(1)).getAllBoards();
+    }
+
 
     @Test
     void shouldCreateABoard_whenEndpointIsHit() throws Exception {
@@ -82,7 +102,7 @@ public class BoardControllerTest {
         when(boardController.createBoard())
                 .thenReturn(board.toString());
         //When
-        var response = mockMvc.perform(post("/api/boards/createBoard")
+        var response = mockMvc.perform(post("/api/game/v1/board/create")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn()
@@ -101,7 +121,7 @@ public class BoardControllerTest {
         var id = UUID.randomUUID();
         when(boardController.deleteBoard(id)).thenReturn(responseEntity);
         //When
-        mockMvc.perform(delete("/api/boards/{boardId}", id)
+        mockMvc.perform(delete("/api/game/v1/board/{boardId}/delete", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(resultMatcher);
         //Then
