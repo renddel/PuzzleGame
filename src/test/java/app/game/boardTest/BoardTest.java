@@ -26,7 +26,7 @@ public class BoardTest {
 
     @Test
     public void shouldBuildCorrectGrid_whenTilesInitialized() {
-        int[][] tiles = board.getBoard();
+        var tiles = board.getBoard();
         assertNotNull("Tiles should not be null", tiles);
         assertEquals("Tiles should be of size 4x4", 4, tiles.length);
         assertEquals("Each row of tiles should be of size 4", 4, tiles[0].length);

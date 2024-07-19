@@ -29,7 +29,7 @@ public class Board {
     }
 
     private int[][] initializeBoardTiles() {
-        int[][] tempBoard = new int[SIZE][SIZE];
+        var tempBoard = new int[SIZE][SIZE];
 
         var tileValues = range(0, SIZE * SIZE)
                 .boxed()
@@ -51,7 +51,7 @@ public class Board {
             return;
         }
 
-        int expectedValue = 1;
+        var expectedValue = 1;
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if(board[i][j] == 0) {
